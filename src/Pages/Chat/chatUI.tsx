@@ -79,7 +79,7 @@ const ChatUI = () => {
             <div id="left-panel" class="panel">
                 <div id="Menu">
                     <div id="logo-div">
-                        <img id="logo-img" src="/assets/PAUSI-T.png" alt="PAUSI" lazy={true} />
+                        <img id="logo-img" src="/assets/PAUSI-T.png" alt="PAUSI" onerror="this.src='/PAUSI/assets/PAUSI-T.png';" />
                         <span id="logo-name" title="Click to refresh" onClick={() => window.location.reload()}>
                             PAUSI
                         </span>

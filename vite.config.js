@@ -10,5 +10,5 @@ export default defineConfig({
         target: "esnext",
     },
     base: "",
-    publicDir: "PAUSI",
+    // publicDir: "PAUSI",
 });
