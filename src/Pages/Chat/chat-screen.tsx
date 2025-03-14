@@ -3,8 +3,9 @@ import { assert } from "../../Scripts/error";
 // import { getFromStore, putIntoStore } from "../../Scripts/Storage/local-storage";
 import Chat, { createChatCard, getRandomChatID } from "./chat";
 import AI from "../../Scripts/AI/AI";
-import { getChatBasic_Chat4ID, getChats4IDs, setChat, setChatIDs4ChatBlock, updateLastChat } from "../../Scripts/Chats/processing";
+import { deleteChatIF, getChatBasic_Chat4ID, getChats4IDs, setChat, setChatIDs4ChatBlock, updateLastChat } from "../../Scripts/Chats/processing";
 import { avatar_t, Chat_t, ChatBlockID_t, ChatIDs_t, Chats_t, IChatInfo, ID_t, name_t } from "../../Scripts/Storage/IDBSchema";
+import { sleep } from "../../Scripts/General/general";
 // import { sleep } from "../../Scripts/General/general";
 
 // const sample_chats: Array<IChatCard> = [];
@@ -46,6 +47,7 @@ const ChatScreen = (props: IChatScreen) => {
 
     const [getChats, setChats] = createSignal<Chats_t>([]);
     const [getLoaded, setLoaded] = createSignal<boolean>(false);
+    const [getDeleterState, setDeleterState] = createSignal<number>(0);
     let chat_started: boolean = false;
     // delete chats_hist.chats;
 
@@ -82,13 +84,13 @@ const ChatScreen = (props: IChatScreen) => {
         ai.startChat(getChats(), { instructions: chat_info?.instructions, extra_info: chat_info?.extra_info });
     };
 
-    const pushChat = (chat: Chat_t) => {
+    const pushChat = async (chat: Chat_t) => {
         setChats([...getChats(), chat]);
         setChat(chat);
         messages_count += 1;
-        setChatIDs4ChatBlock(chat_block_id as ChatBlockID_t, chat_ids as ChatIDs_t);
-        callback(messages_count, ID);
         chat_ids?.push(chat.chatID);
+        await setChatIDs4ChatBlock(chat_block_id as ChatBlockID_t, chat_ids as ChatIDs_t);
+        callback(messages_count, ID);
     };
 
     const sendMessage = async () => {
@@ -96,10 +98,10 @@ const ChatScreen = (props: IChatScreen) => {
         const data = chat_input_ele.value;
         if (data) {
             startChat();
-            let new_chat = createChatCard("$user", data, chat_info?.avatar as avatar_t, getRandomChatID(), Date.now());
+            let new_chat = createChatCard("$user", data, "Me" as avatar_t, getRandomChatID(), Date.now());
             // new_chat.message = data;
             // new_chat.sender = "$user"; //Math.random() < 0.5 ? "$user" : "Mayank Maurya";
-            pushChat(new_chat);
+            await pushChat(new_chat);
             console.log("sendMessage.new_chat.user : ", new_chat);
             chat_input_ele.value = "";
             scrollToBottom();
@@ -107,7 +109,7 @@ const ChatScreen = (props: IChatScreen) => {
                 const reply = await ai.sendChat(data);
                 // const reply = data;
                 new_chat = createChatCard(chat_info?.name as name_t, reply, chat_info?.avatar as avatar_t, getRandomChatID(), Date.now());
-                pushChat(new_chat);
+                await pushChat(new_chat);
                 console.log("sendMessage.new_chat.ai : ", new_chat);
                 scrollToBottom();
             }
@@ -115,6 +117,33 @@ const ChatScreen = (props: IChatScreen) => {
             // updateChatBasicChats2Storage(chat_info as IChatInfo, getChats());
         }
         chat_input_ele.focus();
+    };
+
+    deleteChatIF("UZLD_YJNW7qM3FV6oCXcqocLinKRgIGH_INFO", true)
+        .then(() => console.log("Deleted!"))
+        .catch(() => console.log("Not Deleted!"));
+
+    const delReq = async (typ: number) => {
+        // console.log("delReq", getDeleterState(), typ);
+        if (getDeleterState() == 0 && typ == 1) {
+            await sleep(800);
+            setDeleterState(1);
+            await sleep(4200);
+            setDeleterState(0);
+        } else if (getDeleterState() == 1 && typ == 2) {
+            await sleep(800);
+            setDeleterState(2);
+            await sleep(5000);
+            setDeleterState(0);
+            // await sleep(5000);
+            // await deleteChatBlock(chat_block_id as ChatBlockID_t);
+            // history.back();
+        } else if (getDeleterState() == 2 && typ == 2) {
+            // setDeleterState(0);
+            await deleteChatIF(ID, true);
+            callback(-69, "PAUSI");
+            console.log("Deleted!");
+        }
     };
 
     const handleKeyDown = (event: KeyboardEvent) => event.key === "Enter" && event.ctrlKey && chat_input_ele && sendMessage();
@@ -126,7 +155,14 @@ const ChatScreen = (props: IChatScreen) => {
                     <div id="chat-info">
                         <div id="chat-name">{chat_info?.name}</div>
                     </div>
-                    <div id="chat-settings">⚙</div>
+                    <div id="chat-settings">
+                        <div id="chat-delete" classList={{ hidden: getDeleterState() == 0, del: getDeleterState() == 1, cnfrm: getDeleterState() == 2 }} onClick={() => delReq(2)}>
+                            {["", "Delete this chat?", "Click again in 5sec to confirm"][getDeleterState()]}
+                        </div>
+                        <div id="chat-gear" title="Click to see available options" onClick={() => delReq(1)}>
+                            ⚙
+                        </div>
+                    </div>
                 </div>
                 <div id="chats-body" ref={chat_body_div}>
                     <For each={getChats()}>{(chat_data, i) => <Chat {...chat_data} />}</For>

@@ -56,8 +56,14 @@ const ChatUI = () => {
     });
 
     const chattCallBack = async (message_count: number, ID: string) => {
+        if (ID == "PAUSI" && message_count < 0) {
+            // window.location.reload();
+            setCurID("Home-Chat-UI");
+            await refreshIDs();
+            return;
+        }
         if (true || message_count == 1) {
-            const chat_ids = await refreshIDs();
+            const chat_ids = await refreshIDs(ID);
             console.log("ChatUI chattCallBack", message_count, ID, chat_ids);
         }
         const { getNum, setNum } = id_trgrs[ID];
@@ -80,7 +86,7 @@ const ChatUI = () => {
                     </span>
                 </div>
                 <div id="search" title="Under development">
-                    search
+                    <input id="search-input" placeholder="search feature is under development" disabled />
                 </div>
                 <div id="chats">
                     {/* TODO: ChatList */}

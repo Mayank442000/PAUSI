@@ -32,12 +32,27 @@ const getChatBlockID = (ID: ID_t): ChatBlockID_t => ID + (ID.slice(-6) != "_CHAT
 const getAllChatInfoIDs = async (): Promise<ChatInfoIDs_t> => ((await IndexDBInstance.get("ALL_CHAT_IDS", "all_chat_ids")) as IAllChatsIDs)?.IDs || [];
 const putAllChatIDs = async (IDs: ChatInfoIDs_t) => (await IndexDBInstance.put("ALL_CHAT_IDS", { IDs }, "all_chat_ids")) as keys_t;
 
-const prependNewChatID = async (ID: string) => {
+const delChatID = async (ID: ID_t, silent: boolean = true) => {
     const chat_ids = await getAllChatInfoIDs();
-    if (chat_ids.indexOf(ID) !== -1) throw "prependNewChatID: ID repeated : ID = " + ID;
+    const ind = chat_ids.indexOf(ID);
+    // console.log("delChatID", ID, ind, chat_ids);
+    if (ind === -1)
+        if (silent) return;
+        else throw "delChatID: ID not found : ID = " + ID;
+    chat_ids.splice(ind, 1);
+    putAllChatIDs(chat_ids);
+    // console.log("delChatID", ID, chat_ids);
+    return chat_ids;
+};
+
+const prependNewChatID = async (ID: string, silent: boolean = true) => {
+    const chat_ids = await getAllChatInfoIDs();
+    if (chat_ids.indexOf(ID) !== -1)
+        if (silent) return;
+        else throw "prependNewChatID: ID repeated : ID = " + ID;
     chat_ids.unshift(ID);
     putAllChatIDs(chat_ids);
-    return;
+    return chat_ids;
 };
 
 const prependChatID = async (ID: string) => {
@@ -49,13 +64,15 @@ const prependChatID = async (ID: string) => {
     return chat_ids;
 };
 
-const prependOldChatID = async (ID: ID_t) => {
+const prependOldChatID = async (ID: ID_t, silent: boolean = true) => {
     console.log("prependOldChatID", ID);
     const chat_ids = await getAllChatInfoIDs();
     console.log("prependOldChatID", ID, chat_ids);
     const ind = chat_ids.indexOf(ID);
     console.log("prependOldChatID", ID, chat_ids);
-    if (ind === -1) throw "prependOldChatID: ID not found : ID = " + ID;
+    if (ind === -1)
+        if (silent) return;
+        else throw "prependOldChatID: ID not found : ID = " + ID;
     chat_ids.splice(ind, 1);
     chat_ids.unshift(ID);
     putAllChatIDs(chat_ids);
@@ -80,8 +97,10 @@ const createNewChat = async (ID: ID_t, name: string, avatar: string, instruction
     await awaitAll(IndexDBInstance.put("ChatInfo", chat_info), IndexDBInstance.put("ChatBlocks", chat_block));
 };
 
-const createNewChatIF = async (ID: ID_t, name: string, avatar: string, instructions?: string, extra_info?: string, users?: User_t) => {
-    if (avatar.length > 3) throw "createNewChatIF: abnormally big avatar : avatar = " + avatar;
+const createNewChatIF = async (ID: ID_t, name: string, avatar: string, instructions?: string, extra_info?: string, users?: User_t, silent: boolean = true) => {
+    if (avatar.length > 3)
+        if (silent) return;
+        else throw "createNewChatIF: abnormally big avatar : avatar = " + avatar;
     const chatInfoID = getChatInfoID(ID);
     // chats = await getChatIDs4ID(ID);
     // console.log("createNewChatIF", ID, name, avatar, instructions, extra_info, users, chats, await IndexDBInstance.keyExists("ChatInfo", chatInfoID));
@@ -107,15 +126,15 @@ const getChatIDs4ID = async (ID: ID_t): Promise<ChatIDs_t> => {
 };
 
 const deleteChatBlock = async (chat_block_id: ChatBlockID_t) => {
+    if (!chat_block_id) return;
     const chat_ids = await getChatsIDs4ChatBlock(chat_block_id);
-    await awaitAll(IndexDBInstance.del("ChatBlocks", chat_block_id), IndexDBInstance.dels("Chats", chat_ids));
+    return await awaitAll(IndexDBInstance.del("ChatBlocks", chat_block_id), IndexDBInstance.dels("Chats", chat_ids));
 };
 
-const deleteChatIF = async (ID: ID_t) => {
-    const chatBlockID = getChatBlockID(ID),
-        chatInfoID = getChatInfoID(ID);
-    const chat_ids = await getChatsIDs4ChatBlock(chatBlockID);
-    await awaitAll(IndexDBInstance.del("ChatInfo", chatInfoID), IndexDBInstance.dels("Chats", chat_ids));
+const deleteChatIF = async (ID: ID_t, silent: boolean = true) => {
+    const chatInfoID = getChatInfoID(ID);
+    const chat_info = await getChatInfo4ID(ID);
+    return await awaitAll(IndexDBInstance.del("ChatInfo", chatInfoID), deleteChatBlock(chat_info?.chatBlockID), delChatID(ID, silent));
 };
 
 const updateChat2Storage = (chatobj: IChatsHist) => {
@@ -175,7 +194,7 @@ export {
     getChatBasic_Chat4ID,
     // updateChatBasicChats2Storage,
     createNewChatIF,
-    // deleteChatIF,
+    deleteChatIF,
     // prependOldChatID,
     getChat4ID,
     getChats4IDs,

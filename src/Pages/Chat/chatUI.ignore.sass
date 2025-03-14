@@ -2,7 +2,8 @@
 #MainChatDiv
     display: flex
     flex: 1
-    background-color: #FCC
+    background-color: #111
+    // backdrop-filter: brightness(3) !important
     justify-content: space-between
     align-content: center
     user-select: none
@@ -19,31 +20,25 @@
             display: flex
             justify-content: space-between
             font-size: 1.5rem
-            // background-color: #555
-            background-color: #E88
+            backdrop-filter: brightness(3) !important
             color: #FFF
-            padding: 1vmin
-            border: 1.5px solid #555
             *
+                padding: 0.5ch
                 &:hover
                     text-decoration: underline
                     cursor: pointer
                     text-shadow: 0px 0px 10px  #AFF
         #search
-            display: flex
             flex-direction: row
-            background-color: #FFF
+            backdrop-filter: brightness(3) !important
             border: 1px solid #222
             font-size: 1rem
-            border-left: none
-            border-right: none
-            #search-input
-                flex: 1
         #chats
             display: flex
             flex-direction: column
             gap: 1vmin
         #new-chat-div
+            backdrop-filter: brightness(3) !important
             padding: 1vmin
             bottom: 0
             font-size: 1.2rem
@@ -53,13 +48,10 @@
                 flex: 1
                 padding: 1vmin
                 justify-content: center
-                background-color: #FAA
-                border: 2px solid transparent
+                backdrop-filter: brightness(3) !important
                 &:hover
                     text-decoration: underline
-                    border: 1.5px solid #222
                     cursor: pointer
-                    background-color: #E99
                     color: #fff
                     font-weight: bold
     #right-panel
@@ -69,38 +61,34 @@
 
 .chat-card
     display: flex
-    border: 1px  solid #222
-    border-left: none
-    border-right: none
-    background-color: #FDD
+    border: 1px solid #222
+    backdrop-filter: brightness(3) !important
+    backdrop-filter: brightness(3) !important
     flex-direction: row
     cursor: pointer
     max-width: 20vw
     padding: 0.5ch
-    gap: 1ch
-    color: #621E
+    gap: 0.5ch
     &:hover
         filter: brightness(1.05)
     .chat-card__avatar-div
         display: flex
         flex: 0.15
         justify-content: center
-        // background-color: #CaF
+        backdrop-filter: brightness(3) !important
         .chat-card__avatar
             display: flex
             flex: 1
             height: 100%
             justify-content: center
             align-items: center
-            // background-color: #FAA
+            backdrop-filter: brightness(3) !important
             div
                 display: flex
                 flex: 1
                 justify-content: center
                 align-items: center
-                background-color: #FAA
-                color: #621
-                text-shadow: 0px 0px 10px  #E621
+                backdrop-filter: brightness(3) !important
                 max-height: fit-content
                 aspect-ratio: 1.0 !important
                 border-radius: 100%
@@ -111,24 +99,22 @@
         flex-direction: column
         overflow: hidden
         gap: 0.5ch
+        *
+            width: 100%
         .chat-card__name
             justify-content: flex-start
-            font-size: 1.1rem
-            font-weight: 400
-            // border: 1px solid #222
+            border: 1px solid #222
         .chat-card__message
             display: inline-block
             justify-content: flex-start
-            // border: 1px solid #222
+            border: 1px solid #222
             white-space: nowrap
             overflow: hidden
-            background-color: auto
+            backdrop-filter: brightness(3) !important
             padding: 1px
             vertical-align: middle
             *
                 display: inline-block
-                font-size: 0.9rem !important
-                font-weight: 350 !important
                 margin: 0
                 padding: 0
                 white-space: nowrap
@@ -137,49 +123,33 @@
     display: flex
     flex: 1
     flex-direction: column
-    // background-color: #dfc5aa
-    background-color: #FBB
+    backdrop-filter: brightness(3) !important
     height: 100%
     #chat-header
         display: flex
         flex-direction: row
-        border-bottom: 2px solid #222
-        font-size: 1.5rem
-        padding: 1vmin
+        *
+            display: flex
+            font-size: 1.5rem
         #chat-info
+            padding: 1vmin
             flex: 1
         #chat-settings
-            display: flex
-            flex-direction: row
+            padding: 1vmin
             font-weight: bold
             cursor: pointer
-            gap: 1vmin
-            #chat-delete
-                &.hidden
-                    display: none
-                &.del
-                    font-size: 1.35rem
-                    color: #621
-                &.cnfrm
-                    font-size: 1.15rem
-                    color: #F00
-
     #chats-body
         flex: 1
         flex-direction: column
         justify-content: flex-start
-        background-color: #FFF5
-        // background-color: #cbe8cb
+        backdrop-filter: brightness(3) !important
         overflow-y: scroll
         scrollbar-width: thin
     #chat-footer
         display: flex
         flex-direction: row
-        background-color: #FFF3
         padding: 1vmin
         border: 1px solid #222
-        border-left: none
-        border-right: none
         gap: 1vmin
         *
             display: flex
@@ -188,7 +158,6 @@
             border: 1px solid #222
             font-size: 1.2rem
             overflow-y: auto
-            background-color: #FFFB
         #chat-send-div
             flex-direction: column
             justify-content: center
@@ -196,16 +165,15 @@
                 padding: 1vmin
                 cursor: pointer
                 border: 1px solid #222
-                background-color: #FDD
+                backdrop-filter: brightness(3) !important
                 max-height: 25vh
                 border-radius: 25%
-
     #loader
         display: flex
         flex: 1
         justify-content: center
         align-items: center
-        background-color: maroon
+        backdrop-filter: brightness(3) !important
         color: #FFF
         animation: loading 1s
         @keyframes loading
@@ -217,21 +185,20 @@
 .chat-space
     display: flex
     flex:1
-    // width: calc(100% - 6vmin)
-    // background-color: #FFA
-    margin: 1.5vmin 3vmin 1.5vmin 3vmin
+    width: calc(100% - 6vmin)
+    backdrop-filter: brightness(3) !important
+    margin: 1.5vmin 2.5vmin 1.5vmin 2.5vmin
     height: fit-content
     &.by-user
         flex-direction: row-reverse
     .chat-block
         display: flex
-        $chat-block-bg-color: #c7e8cc
+        $chat-block-bg-color: #FDF
         $chat-block-unit: 1vmin
         flex-direction: row
-        background-color: $chat-block-bg-color
+        backdrop-filter: brightness(3) !important
         padding: $chat-block-unit
         max-width: 60%
-        color: #0008
         height: fit-content
         border-radius: $chat-block-unit
         gap: $chat-block-unit
@@ -242,36 +209,27 @@
             box-shadow: 1px 1px #000
         .sender-data
             display: flex
-            // padding: 1ch
-            // width: fit-content
+            width: fit-content
             flex-direction: column
             justify-content: space-between
+            *
+                display: flex
             .sender-avatar-div
-                // min-height: fit-content
-                // min-width: fit-content
-                color: #621E
                 .sender-avatar
-                    display: flex
-                    flex: 1
-                    justify-content: center
-                    background-color: #FDD
-                    // padding: $chat-block-unit
+                    backdrop-filter: brightness(3) !important
+                    padding: $chat-block-unit
                     border-radius: 100%
-                    width: 5.5ch !important
-                    // padding: 0.5ch
                     aspect-ratio: 1.0 !important
                     border: 1px solid
                     align-items: center
             .chat-triangle-div
-                // flex-direction: row
-                background-color: transparent
-                border: none
+                flex-direction: row
                 &.by-user
-                    transform: scale(-1, 1)
+                    justify-content: flex-end
                 .chat-triangle
                     $size: 2.1vmin
                     content: ""
-                    // z-index: -10
+                    z-index: 10
                     width: 0
                     height: 0
                     border-top: $size solid transparent !important
@@ -279,20 +237,20 @@
                     border-bottom: $size solid $chat-block-bg-color !important
                     border-left: $size solid transparent !important
                     box-shadow: 0px 1px #000
-                    transform: rotateX(1deg)
                     &:not(.by-user)
                         margin-left: calc($size * -1.5)
                         margin-bottom: calc($size * -0.48)
                     &.by-user
-                        margin-left: calc($size * -1.5)
+                        margin-right: calc($size * -1.5)
                         margin-bottom: calc($size * -0.47)
+                        transform: scale(-1, 1)
         .chat-data
             .chat-body
                 display: block
-                color: #000B
-                background-color: #FFDA
+                color: #004
+                backdrop-filter: brightness(3) !important
                 font-size: 1.1rem
-                border: 1px solid #222
+                border: 2px solid #222
                 padding: 1.5vmin
                 border-radius: 0.5vmin
                 white-space: pre-line
@@ -319,7 +277,7 @@
     height: 100%
     justify-content: center
     align-items: center
-    background-color: #FBB
+    backdrop-filter: brightness(3) !important
     gap: 20vmin
     #api
         display: flex
@@ -330,7 +288,7 @@
         font-size: 2rem
         border-radius: 5px
         gap: 1ch
-        background-color: #FFF5
+        backdrop-filter: brightness(3) !important
         padding: 1ch
         #APIkeyInp
             flex: 1
@@ -344,7 +302,7 @@
         flex-direction: column
         gap:2vmin
         >div
-            background: #FFF5
+            background: #FFFA
             border: 1px solid grey
             font-size: 1.25rem
             padding: 1.5ch
@@ -360,14 +318,14 @@
     justify-content: center
     align-items: center
     overflow-y: hidden
-    background-color: #FBB
+    backdrop-filter: brightness(3) !important
     max-height: 100%
     #AddNewChat
         display: flex
         flex: 1
         flex-direction: column
         gap: 2vmin
-        // background-color: #AFF
+        backdrop-filter: brightness(3) !important
         justify-content: center
         align-items: center
         overflow-y: auto
@@ -375,30 +333,27 @@
         .new-chat-field
             display: flex
             width: 80%
-            background-color: #FFF5
+            backdrop-filter: brightness(3) !important
             flex-direction: row
             justify-content: center
             align-items: center
             padding: 1vmin
-            border-radius: 5px
             .new-chat-label
                 display: flex
                 flex: 0.15
                 justify-content: center
-                // background-color: #FAF
+                backdrop-filter: brightness(3) !important
                 align-items: center
                 text-align: center
                 font-size: 1.3rem
             textarea
                 color: purple
                 min-height: 25vmin
-            textarea, input
+            .new-chat-input
                 display: flex
                 flex: 1.0
-                background-color: #FFFA
                 font-size: 1.3rem
                 padding: 0.5rem
-                border: 1px solid #222
             #new-chat-butt
                 font-size: 1.3rem
                 flex: 0.2
@@ -412,15 +367,11 @@
     display: flex
     flex: 1
     flex-direction: column
-    background-color: #FCC
+    backdrop-filter: brightness(3) !important
     color: #222
     padding: 0 5vmin 5vmin 5vmin
     overflow-y: auto
     scrollbar-width: thin
-    gap: 2vmin
-    >div:not(:first-child)
-        padding: 2vmin
-        background-color: #FFF5
     #Header
         display: flex
         flex-direction: row
@@ -430,7 +381,6 @@
             text-decoration: underline
     *
         text-align: justify
-        color: #621E
     li
         margin: 1ch 0 1ch 0
     .bullet-head

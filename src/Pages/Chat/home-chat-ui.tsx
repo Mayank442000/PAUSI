@@ -2,7 +2,7 @@ const HomeChatUI = () => {
     return (
         <div id="Home-Chat-UI">
             <div id="Header">
-                <h1 onClick={() => window.location.reload()} title="Welcome to PAUSI; click to refresh">
+                <h1 onClick={() => window.location.reload()} title="Welcome to PAUSI &emsp; | &emsp; click to refresh">
                     Welcome to PAUSI
                 </h1>
             </div>
@@ -18,8 +18,7 @@ const HomeChatUI = () => {
                             <span class="bullet-head">Creative Partner:</span> Brainstorm ideas, write stories, or compose music with an AI collaborator.
                         </li>
                         <li>
-                            <span class="bullet-head">Character Role-Play:</span> Design AI bots based on your favorite characters for fun and engaging
-                            conversations.
+                            <span class="bullet-head">Character Role-Play:</span> Design AI bots based on your favorite characters for fun and engaging conversations.
                         </li>
                         <li>
                             <span class="bullet-head">Personal Tutor:</span> Build an AI to help you learn new subjects or practice skills.
@@ -35,16 +34,15 @@ const HomeChatUI = () => {
                 <p>Remember if you feel lost you can come back to this by clicking "Pausi" icon in top left</p>
                 <ol>
                     <li>
-                        <span class="bullet-head">Explore the Panel:</span> On the left, you'll see the <span class="highlights">Panel</span>. This is your gateway
-                        to PAUSI's features.
+                        <span class="bullet-head">Explore the Panel:</span> On the left, you'll see the <span class="highlights">Panel</span>. This is your gateway to PAUSI's
+                        features.
                     </li>
                     <li>
-                        <span class="bullet-head">Setup your AI:</span> Currently PAUSI works only on Gemini which you may setup after clicking on "Menu" on top of
-                        left pannel
+                        <span class="bullet-head">Setup your AI:</span> Currently PAUSI works only on Gemini which you may setup after clicking on "Menu" on top of left pannel
                     </li>
                     <li>
-                        <span class="bullet-head">Click “+ Add New Chat”:</span> Find the <span class="highlights">“+ Add New Chat”</span> button in the Menu and
-                        click it. This will take you to the AI bot creation page.
+                        <span class="bullet-head">Click “+ Add New Chat”:</span> Find the <span class="highlights">“+ Add New Chat”</span> button in the Menu and click it. This
+                        will take you to the AI bot creation page.
                     </li>
                     <li>
                         <span class="bullet-head">Customize Your Bot:</span> On the “Create New Chat” screen, you can:
@@ -53,8 +51,7 @@ const HomeChatUI = () => {
                                 Give your bot a <span class="highlights">Name</span> and <span class="highlights">Avatar</span>.
                             </li>
                             <li>
-                                Define its <span class="highlights">Instructions</span> - tell the AI how to behave and what its purpose is. Be creative and
-                                specific!
+                                Define its <span class="highlights">Instructions</span> - tell the AI how to behave and what its purpose is. Be creative and specific!
                             </li>
                             <li>
                                 Add <span class="highlights">Extra Information</span> to give your bot more context.
@@ -62,8 +59,8 @@ const HomeChatUI = () => {
                         </ul>
                     </li>
                     <li>
-                        <span class="bullet-head">Click “Create”:</span> Once you're happy with your bot's configuration, click the{" "}
-                        <span class="highlights">“Create”</span> button to start chatting!
+                        <span class="bullet-head">Click “Create”:</span> Once you're happy with your bot's configuration, click the <span class="highlights">“Create”</span> button
+                        to start chatting!
                     </li>
                     <li>
                         <span class="bullet-head">Chat and Have Fun!</span>
