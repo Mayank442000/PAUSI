@@ -78,9 +78,12 @@ const ChatUI = () => {
         <div id="MainChatDiv">
             <div id="left-panel" class="panel">
                 <div id="Menu">
-                    <span title="Click to refresh" onClick={() => window.location.reload()}>
-                        PAUSI
-                    </span>
+                    <div id="logo-div">
+                        <img id="logo-img" src="/src/assets/PAUSI-T.png" alt="PAUSI" />
+                        <span id="logo-name" title="Click to refresh" onClick={() => window.location.reload()}>
+                            PAUSI
+                        </span>
+                    </div>
                     <span title="configure" onClick={() => setCurID("Settings")}>
                         Menu
                     </span>
