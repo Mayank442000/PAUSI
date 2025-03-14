@@ -29,12 +29,19 @@ const AddNewChat = (props: IAddNewChat) => {
         let avatar = avatar_el?.value;
         console.log("autoAvatar", avatar, name, avatar_el, avatar || !name || !avatar_el);
         if (avatar || !name || !avatar_el) return;
-        if (name.indexOf(" ")) {
+        if (name.indexOf(" ") > 0) {
             const name_parts = name.split(" ");
             avatar = (name_parts[0][0] + (name_parts?.[1]?.[0] || "") + (name_parts?.[2]?.[0] || "")).toUpperCase();
-        } else avatar = name.slice(0, 2);
+            if (avatar.length < 2) avatar = avatar.slice(0, 2).toUpperCase();
+        } else avatar = name.slice(0, 2).toUpperCase();
         console.log(avatar);
         avatar_el.value = avatar;
+    };
+
+    const onAvatarChange = async () => {
+        await sleep(1000);
+        let avatar = avatar_el?.value;
+        if (!avatar) autoAvatar();
     };
 
     const createNewChat = async () => {
@@ -69,7 +76,7 @@ const AddNewChat = (props: IAddNewChat) => {
                 </div>
                 <div class="new-chat-field">
                     <div class="new-chat-label">Avatar</div>
-                    <input class="new-chat-input" placeholder="Bot Initials" maxlength={3} ref={avatar_el} />
+                    <input class="new-chat-input" placeholder="Bot Initials" maxlength={3} ref={avatar_el} onChange={onAvatarChange} />
                     {/* value="RS" */}
                 </div>
                 <div class="new-chat-field">

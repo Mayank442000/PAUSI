@@ -129,12 +129,12 @@ const ChatScreen = (props: IChatScreen) => {
             await sleep(800);
             setDeleterState(1);
             await sleep(4200);
-            setDeleterState(0);
+            if (getDeleterState() == 1) setDeleterState(0);
         } else if (getDeleterState() == 1 && typ == 2) {
             await sleep(800);
             setDeleterState(2);
             await sleep(5000);
-            setDeleterState(0);
+            if (getDeleterState() == 2) setDeleterState(0);
             // await sleep(5000);
             // await deleteChatBlock(chat_block_id as ChatBlockID_t);
             // history.back();
@@ -143,7 +143,7 @@ const ChatScreen = (props: IChatScreen) => {
             await deleteChatIF(ID, true);
             callback(-69, "PAUSI");
             console.log("Deleted!");
-        }
+        } else setDeleterState(0);
     };
 
     const handleKeyDown = (event: KeyboardEvent) => event.key === "Enter" && event.ctrlKey && chat_input_ele && sendMessage();

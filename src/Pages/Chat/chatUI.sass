@@ -23,7 +23,8 @@
             background-color: #E88
             color: #FFF
             padding: 1vmin
-            border: 1.5px solid #555
+            // border: 1.5px solid #555
+            border-bottom: 2px solid #621
             *
                 display: flex
                 &:hover
@@ -159,7 +160,7 @@
     #chat-header
         display: flex
         flex-direction: row
-        border-bottom: 2px solid #222
+        border-bottom: 2px solid #621
         font-size: 1.5rem
         padding: 1vmin
         #chat-info
@@ -171,6 +172,9 @@
             cursor: pointer
             gap: 1vmin
             #chat-delete
+                &:hover
+                    text-decoration: underline
+                    text-shadow: 0px 0px 10px  #E621
                 &.hidden
                     display: none
                 &.del
