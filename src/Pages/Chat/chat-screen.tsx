@@ -72,7 +72,10 @@ const ChatScreen = (props: IChatScreen) => {
     const scrollToBottom = () => chat_body_div?.scrollTo(0, chat_body_div.scrollHeight);
 
     // console.log("ChatScreen", "chat_info : ", chatScreenData()?.chat_info);
-    onMount(async () => scrollToBottom());
+    onMount(async () => {
+        scrollToBottom();
+        chat_input_ele?.focus();
+    });
 
     const startChat = () => {
         if (chat_started) return;

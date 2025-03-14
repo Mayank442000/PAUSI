@@ -1,14 +1,16 @@
 import { onMount, Setter } from "solid-js";
 import { getRandomBase64 } from "../../Scripts/General/random";
 import { createNewChatIF } from "../../Scripts/Chats/processing";
+import { ID_t } from "../../Scripts/Storage/IDBSchema";
+import { sleep } from "../../Scripts/General/general";
 
 interface IAddNewChat {
     setCurID: Setter<string>;
-    refreshIDs: () => void;
+    refreshCallBack: (ID: ID_t) => Promise<void>;
 }
 
 const AddNewChat = (props: IAddNewChat) => {
-    const { setCurID, refreshIDs } = props;
+    const { setCurID, refreshCallBack } = props;
     let id_el: HTMLInputElement | undefined,
         name_el: HTMLInputElement | undefined,
         avatar_el: HTMLInputElement | undefined,
@@ -35,17 +37,21 @@ const AddNewChat = (props: IAddNewChat) => {
         avatar_el.value = avatar;
     };
 
-    const createNewChat = () => {
+    const createNewChat = async () => {
         const ID = randomiseID(),
             NAME = name_el?.value,
             AVATAR = avatar_el?.value,
             INSTRUCTIONS = instructions_el?.value,
             EXTRA = extra_el?.value;
         if (ID && NAME && AVATAR) {
-            createNewChatIF(ID, NAME, AVATAR, INSTRUCTIONS, EXTRA);
-            console.log("AddNewChat.createNewChat", ID, NAME, AVATAR, INSTRUCTIONS, EXTRA);
-            refreshIDs();
+            await createNewChatIF(ID, NAME, AVATAR, INSTRUCTIONS, EXTRA);
+            // console.log("AddNewChat.createNewChat", ID, NAME, AVATAR, INSTRUCTIONS, EXTRA);
+            await refreshCallBack(ID);
+            // console.log("AddNewChat.createNewChat", ID, NAME, AVATAR, INSTRUCTIONS, EXTRA);
             // setCurID(ID);
+            // await sleep(250);
+            console.log("AddNewChat.createNewChat", ID, NAME, AVATAR, INSTRUCTIONS, EXTRA);
+            setCurID(ID);
         }
     };
 
@@ -97,7 +103,7 @@ const AddNewChat = (props: IAddNewChat) => {
                     />
                 </div>
                 <div class="new-chat-field">
-                    <button id="new-chat-butt" onClick={createNewChat}>
+                    <button id="new-chat-butt" onClick={async () => await createNewChat()}>
                         Create
                     </button>
                 </div>

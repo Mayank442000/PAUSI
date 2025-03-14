@@ -29,7 +29,7 @@ export interface IChatsHist extends IChatInfo {
 const getChatInfoID = (ID: ID_t): ChatInfoID_t => ID + (ID.slice(-6) != "_INFO" ? "_INFO" : "");
 const getChatBlockID = (ID: ID_t): ChatBlockID_t => ID + (ID.slice(-6) != "_CHATS" ? "_CHATS" : "");
 
-const getAllChatInfoIDs = async (): Promise<ChatInfoIDs_t> => ((await IndexDBInstance.get("ALL_CHAT_IDS", "all_chat_ids")) as IAllChatsIDs)?.IDs;
+const getAllChatInfoIDs = async (): Promise<ChatInfoIDs_t> => ((await IndexDBInstance.get("ALL_CHAT_IDS", "all_chat_ids")) as IAllChatsIDs)?.IDs || [];
 const putAllChatIDs = async (IDs: ChatInfoIDs_t) => (await IndexDBInstance.put("ALL_CHAT_IDS", { IDs }, "all_chat_ids")) as keys_t;
 
 const prependNewChatID = async (ID: string) => {
@@ -46,10 +46,13 @@ const prependChatID = async (ID: string) => {
     if (ind != -1) chat_ids.splice(ind, 1);
     chat_ids.unshift(ID);
     putAllChatIDs(chat_ids);
+    return chat_ids;
 };
 
-const prependOldChatID = async (ID: string) => {
+const prependOldChatID = async (ID: ID_t) => {
+    console.log("prependOldChatID", ID);
     const chat_ids = await getAllChatInfoIDs();
+    console.log("prependOldChatID", ID, chat_ids);
     const ind = chat_ids.indexOf(ID);
     console.log("prependOldChatID", ID, chat_ids);
     if (ind === -1) throw "prependOldChatID: ID not found : ID = " + ID;
@@ -180,4 +183,6 @@ export {
     setChatIDs4ChatBlock,
     updateLastChat,
     prependOldChatID,
+    prependChatID,
+    // putAllChatIDs, // TODO: Remove this
 };

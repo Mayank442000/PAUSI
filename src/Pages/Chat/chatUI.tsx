@@ -3,18 +3,13 @@ import AI from "../../Scripts/AI/AI";
 import "./ChatUI.sass";
 import ChatCard from "./chat-cards";
 import ChatScreen from "./chat-screen";
-import { getAllChatInfoIDs } from "../../Scripts/Chats/processing";
-// import { getFromStore } from "../../Scripts/Storage/local-storage";
+import { getAllChatInfoIDs, prependChatID } from "../../Scripts/Chats/processing";
 import Settings from "./settings";
 import AddNewChat from "./add-chat";
 import HomeChatUI from "./home-chat-ui";
-import { prependOldChatID } from "../../Scripts/Chats/processing";
+import { ID_t } from "../../Scripts/Storage/IDBSchema";
 
 interface IChatUI {}
-
-const getChatUIData = async () => {
-    return await getAllChatInfoIDs();
-};
 
 const ChatUI = () => {
     // const [ChatUIData] = createResource(getChatUIData);
@@ -23,30 +18,46 @@ const ChatUI = () => {
     const [getIDs, setIDs] = createSignal<Array<string>>([]);
     const id_trgrs: { [key: string]: { getNum: Accessor<number>; setNum: Setter<number> } } = {};
 
-    const refreshIDs = async () => {
-        console.log("ChatUI.refreshIDs ");
-        const all_ids = (await getAllChatInfoIDs()) || [];
-        console.log("ChatUI.refreshIDs ", all_ids);
+    const refreshIDs = async (ID?: ID_t) => {
+        console.log("ChatUI refreshIDs", ID, ID ? prependChatID : getAllChatInfoIDs);
+        const chat_ids = (ID ? await prependChatID(ID) : await getAllChatInfoIDs()) || [];
+        console.log("ChatUI refreshIDs", ID, getIDs(), chat_ids);
+        setIDs(chat_ids);
+        return chat_ids;
+    };
+
+    const createTrgr4ID = (ID: ID_t) => {
+        const [getNum, setNum] = createSignal<number>(1);
+        id_trgrs[ID] = { getNum, setNum };
+    };
+
+    const createIDTrgrs = async () => {
+        const all_ids = await getAllChatInfoIDs();
+        console.log("ChatUI.refreshCallBack ", all_ids);
         for (let _id of all_ids) {
-            // console.log("ChatUI.refreshIDs ", _id);
-            const [getNum, setNum] = createSignal<number>(1);
-            id_trgrs[_id] = { getNum, setNum };
+            // console.log("ChatUI.refreshCallBack ", _id);
+            createTrgr4ID(_id);
             // console.log("get : ", getNum());
         }
         setIDs(all_ids);
-        console.log("ChatUI.refreshIDs ", getIDs(), typeof all_ids);
-        console.log("ChatUI.refreshIDs ", all_ids, "|", id_trgrs);
+    };
+
+    const refreshCallBack = async (ID: ID_t) => {
+        console.log("ChatUI.refreshCallBack ");
+        createTrgr4ID(ID);
+        const all_ids = await refreshIDs(ID);
+        console.log("ChatUI.refreshCallBack ", getIDs(), typeof all_ids);
+        console.log("ChatUI.refreshCallBack ", all_ids, "|", id_trgrs);
     };
 
     onMount(async () => {
-        refreshIDs();
+        await createIDTrgrs();
         console.log("ChatUI mounted", getIDs()); //, await getAllChatInfoIDs());
     });
 
     const chattCallBack = async (message_count: number, ID: string) => {
         if (true || message_count == 1) {
-            const chat_ids = await prependOldChatID(ID);
-            setIDs(chat_ids);
+            const chat_ids = await refreshIDs();
             console.log("ChatUI chattCallBack", message_count, ID, chat_ids);
         }
         const { getNum, setNum } = id_trgrs[ID];
@@ -89,7 +100,7 @@ const ChatUI = () => {
                     <Settings />
                 </Show>
                 <Show when={getAIloaded() && getCurID() === "Add-New-Chat"} keyed>
-                    <AddNewChat refreshIDs={refreshIDs} setCurID={setCurID} />
+                    <AddNewChat refreshCallBack={refreshCallBack} setCurID={setCurID} />
                 </Show>
                 <Show when={getCurID() === "Home-Chat-UI"} keyed>
                     <HomeChatUI />
