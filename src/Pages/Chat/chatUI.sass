@@ -1,0 +1,448 @@
+
+#MainChatDiv
+    display: flex
+    flex: 1
+    background-color: #DDD
+    justify-content: space-between
+    align-content: center
+    user-select: none
+    height: 100%
+    width: 100%
+    .panel
+        flex-direction: column
+        border: 1px solid #222
+    #left-panel
+        display: flex
+        flex: 0.2
+        gap: 1vmin
+        #Menu
+            display: flex
+            justify-content: space-between
+            font-size: 1.5rem
+            background-color: #555
+            color: #FFF
+            *
+                padding: 0.5ch
+                &:hover
+                    text-decoration: underline
+                    cursor: pointer
+                    text-shadow: 0px 0px 10px  #AFF
+        #search
+            flex-direction: row
+            background-color: #FFF
+            border: 1px solid #222
+            font-size: 1rem
+        #chats
+            display: flex
+            flex-direction: column
+            gap: 1vmin
+        #new-chat-div
+            background-color: #FFA
+            padding: 1vmin
+            bottom: 0
+            font-size: 1.2rem
+            margin-top: 2vmin
+            #new-chat
+                display: flex
+                flex: 1
+                padding: 1vmin
+                justify-content: center
+                background-color: #FAA
+                &:hover
+                    text-decoration: underline
+                    cursor: pointer
+                    color: #fff
+                    font-weight: bold
+    #right-panel
+        display: flex
+        flex: 0.8
+        flex-direction: column
+
+.chat-card
+    display: flex
+    border: 1px solid #222
+    background-color: #FDD
+    flex-direction: row
+    cursor: pointer
+    max-width: 20vw
+    padding: 0.5ch
+    gap: 0.5ch
+    &:hover
+        filter: brightness(1.05)
+    // *
+    //     display: flex
+    //     flex: 1
+    //     line-height: 100%
+    //     justify-content: center
+    //     align-items: center
+    //     margin: 1ch
+    .chat-card__avatar-div
+        display: flex
+        flex: 0.15
+        justify-content: center
+        background-color: #CaF
+        .chat-card__avatar
+            display: flex
+            flex: 1
+            // max-height: fit-content
+            height: 100%
+            justify-content: center
+            align-items: center
+            background-color: #FAA
+            div
+                display: flex
+                flex: 1
+                // width: 100%
+                justify-content: center
+                align-items: center
+                background-color: #FFA
+                // width: fit-content!important
+                max-height: fit-content
+                aspect-ratio: 1.0 !important
+                border-radius: 100%
+                border: 1px solid #222
+    .chat-card__content
+        display: flex
+        flex: 1
+        flex-direction: column
+        overflow: hidden
+        gap: 0.5ch
+        *
+            width: 100%
+        .chat-card__name
+            justify-content: flex-start
+            border: 1px solid #222
+        .chat-card__message
+            display: inline-block
+            // display: flex
+            justify-content: flex-start
+            border: 1px solid #222
+            white-space: nowrap
+            overflow: hidden
+            background-color: auto
+            padding: 1px
+            vertical-align: middle
+            // max-width: 200px
+            // max-height: 2.5ch
+            *
+                display: inline-block
+                margin: 0
+                padding: 0
+                white-space: nowrap
+
+#chat-screen
+    display: flex
+    flex: 1
+    flex-direction: column
+    background-color: #DFF
+    height: 100%
+    // *
+    //     display: flex
+        // border: 1px solid #222
+    #chat-header
+        display: flex
+        flex-direction: row
+        *
+            display: flex
+            font-size: 1.5rem
+        #chat-info
+            padding: 1vmin
+            flex: 1
+        #chat-settings
+            padding: 1vmin
+            font-weight: bold
+            cursor: pointer
+    #chats-body
+        flex: 1
+        flex-direction: column
+        justify-content: flex-start
+        background-color: #DFD
+        overflow-y: scroll
+        scrollbar-width: thin
+        // *
+        //     max-height: fit-content
+    #chat-footer
+        display: flex
+        flex-direction: row
+        padding: 1vmin
+        border: 1px solid #222
+        gap: 1vmin
+        *
+            display: flex
+        #chat-input
+            flex: 1
+            border: 1px solid #222
+            font-size: 1.2rem
+            // line-height: 1.25rem
+            // height: 1.3rem
+            // resize: vertical
+            overflow-y: auto
+        #chat-send-div
+            flex-direction: column
+            justify-content: center
+            #chat-send
+                padding: 1vmin
+                cursor: pointer
+                border: 1px solid #222
+                background-color: #FDD
+                max-height: 25vh
+                border-radius: 25%
+    #loader
+        display: flex
+        flex: 1
+        justify-content: center
+        align-items: center
+        background-color: maroon
+        color: #FFF
+        animation: loading 1s
+        @keyframes loading
+            0%
+                opacity: 0
+            100%
+                opacity: 1
+
+.chat-space
+    display: flex
+    flex:1
+    width: calc(100% - 6vmin)
+    background-color: #FFA
+    margin: 1.5vmin 2.5vmin 1.5vmin 2.5vmin
+    height: fit-content
+    &.by-user
+        flex-direction: row-reverse
+    .chat-block
+        display: flex
+        $chat-block-bg-color: #FDF
+        $chat-block-unit: 1vmin
+        flex-direction: row
+        // justify-content: flex-start
+        background-color: $chat-block-bg-color
+        // height: fit-content
+        // margin-left: 2.5vmin
+        padding: $chat-block-unit
+        // width: fit-content
+        // min-width: 5%
+        // max-width: 60%
+        max-width: 60%
+        // overflow-wrap: break-word
+        // position: absolute
+        height: fit-content
+        border-radius: $chat-block-unit
+        gap: $chat-block-unit
+        &.by-user
+            flex-direction: row-reverse
+            box-shadow: -1px 1px #000
+        &:not(.by-user)
+            box-shadow: 1px 1px #000
+        // *
+        //     align-items: center
+        .sender-data
+            display: flex
+            width: fit-content
+            flex-direction: column
+            justify-content: space-between
+            *
+                display: flex
+            .sender-avatar-div
+                .sender-avatar
+                    background-color: #FDD
+                    padding: $chat-block-unit
+                    border-radius: 100%
+                    aspect-ratio: 1.0 !important
+                    border: 1px solid
+                    align-items: center
+            .chat-triangle-div
+                flex-direction: row
+                &.by-user
+                    justify-content: flex-end
+                .chat-triangle
+                    $size: 2.1vmin
+                    content: ""
+                    z-index: 10
+                    width: 0
+                    height: 0
+                    border-top: $size solid transparent !important
+                    border-right: $size solid $chat-block-bg-color !important
+                    border-bottom: $size solid $chat-block-bg-color !important
+                    border-left: $size solid transparent !important
+                    box-shadow: 0px 1px #000
+                    &:not(.by-user)
+                        margin-left: calc($size * -1.5)
+                        margin-bottom: calc($size * -0.48)
+                    &.by-user
+                        margin-right: calc($size * -1.5)
+                        margin-bottom: calc($size * -0.47)
+                        transform: scale(-1, 1)
+        .chat-data
+            // display: block
+            // display: flex
+            // flex: 1
+            // flex-direction: column
+            // max-width: 92%
+            // max-width: 100%
+            .chat-body
+                display: block
+                // flex-direction: column
+                // flex: 1
+                color: #004
+                background-color: #FFD
+                font-size: 1.1rem
+                border: 2px solid #222
+                padding: 1.5vmin
+                border-radius: 0.5vmin
+                white-space: pre-line
+                text-align: justify  !important
+                user-select: text
+                // max-width: 85%
+                // overflow-x: auto
+                scrollbar-width: thin
+                .chat-markdown
+                    // display: flex
+                    // flex: 1
+                    // flex-direction: column
+                    // max-width: 100%
+                    font-size: 1.2rem
+                    // *
+                    //     max-width: 100%
+                    // >p
+                    //     margin: 0
+                    :first-child
+                        margin-top: 0
+                    :last-child
+                        margin-bottom: 0
+                    *
+                        text-wrap: wrap
+            .chat-time
+                display: flex
+                width: 100%
+                justify-content: flex-end
+
+#Settings
+    display: flex
+    flex: 1
+    flex-direction: column
+    height: 100%
+    justify-content: center
+    align-items: center
+    background-color: #FAF
+    gap: 20vmin
+    #api
+        display: flex
+        flex-direction: row
+        width: 75%
+        justify-content: space-around
+        border: 1px solid grey
+        font-size: 2rem
+        border-radius: 5px
+        gap: 1ch
+        background-color: #FFFA
+        padding: 1ch
+        #APIkeyInp
+            flex: 1
+            font-size: 1.75rem
+            text-align: center
+        #APIkeyBut
+            flex: 0.1
+            font-size: 1.25rem
+    #info
+        display: flex
+        flex-direction: column
+        gap:2vmin
+        >div
+            background: #FFFA
+            border: 1px solid grey
+            font-size: 1.25rem
+            padding: 1.5ch
+            border-radius: 5px
+            a
+                color: blue
+                font-size: 1.1em
+        // #info
+        //     background: #FFFA
+        // #how-to-api
+        //     background: #FFFA
+
+#AddNewChat-div
+    display: flex
+    flex: 1
+    flex-direction: row
+    justify-content: center
+    align-items: center
+    overflow-y: hidden
+    background-color: #AAF
+    max-height: 100%
+    #AddNewChat
+        display: flex
+        flex: 1
+        flex-direction: column
+        // height: 100%
+        gap: 2vmin
+        background-color: #AFF
+        justify-content: center
+        align-items: center
+        overflow-y: auto
+        // padding-top: 5vmin
+        // padding-bottom: 5vmin
+        width: 80%
+        .new-chat-field
+            display: flex
+            // flex: 1
+            width: 80%
+            background-color: #FAA
+            flex-direction: row
+            justify-content: center
+            align-items: center
+            padding: 1vmin
+            .new-chat-label
+                display: flex
+                flex: 0.15
+                justify-content: center
+                background-color: #FAF
+                align-items: center
+                text-align: center
+                font-size: 1.3rem
+            textarea
+                color: purple
+                min-height: 25vmin
+            .new-chat-input
+                display: flex
+                flex: 1.0
+                font-size: 1.3rem
+                padding: 0.5rem
+            #new-chat-butt
+                font-size: 1.3rem
+                flex: 0.2
+                height: 5vmin
+                border-radius: 5px
+                &:hover
+                    cursor: pointer
+                    text-decoration: underline
+                
+#Home-Chat-UI
+    display: flex
+    flex: 1
+    flex-direction: column
+    // justify-content: center
+    background-color: #EEE
+    color: #222
+    padding: 0 5vmin 5vmin 5vmin
+    overflow-y: auto
+    scrollbar-width: thin
+    #Header
+        display: flex
+        flex-direction: row
+        justify-content: center
+        width: 100%
+        * &:hover
+            text-decoration: underline
+    *
+        text-align: justify
+    li
+        margin: 1ch 0 1ch 0
+    .bullet-head
+        font-weight: bold
+    .highlights
+        font-style: italic
+        &:hover
+            text-decoration: underline
+

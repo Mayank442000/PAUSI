@@ -1,0 +1,28 @@
+{
+  "name": "vite-template-solid",
+  "version": "0.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "start": "vite",
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "sass": "^1.85.1",
+    "vite": "^6.0.0",
+    "vite-plugin-solid": "^2.11.6"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.23.0",
+    "@solidjs/router": "^0.15.3",
+    "dotenv": "^16.4.7",
+    "idb": "^8.0.2",
+    "markdown": "^0.5.0",
+    "solid-js": "^1.9.5",
+    "solid-markdown": "2.0.13",
+    "strftime": "^0.10.3"
+  }
+}
